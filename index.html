@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avaliacao</title>
+</head>
+
+<body>
+
+    
+<form id="tabel">
+    <label for="nome">NOME:</label>
+   <input  type="text" name="nome" id="nome"><br>
+   <label for="email">EMAIL:</label>  
+   <input type="email" name="email" id="email"><br>
+    <input type="submit" value="enviar">
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th style="width: 200px;">NOME</th>
+            <th style="width: 200px;">EMAIL</th>
+
+        </tr>
+    </thead>
+    <tbody id="tabela">
+        
+    </tbody>
+</table>
+
+<div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+
+        document.addEventListener('DOMContentLoaded', async (event) =>{
+            const formis = document.querySelector('#tabel')
+            formis.addEventListener('submit', async (event) => {
+                event.preventDefault()
+                 const nome = document.getElementById('nome').value;
+                const email = document.getElementById('email').value;
+
+                const dados = {nome,email}
+                const response = await axios.post('http://localhost:666/', dados)
+
+            })
+
+            const requisitarquivo = await axios.get('http://localhost:666/cebola')
+            console.log(requisitarquivo);
+            const clientes = await requisitarquivo.data ;
+            console.log(clientes)
+        clientes.forEach(cliente => {
+                    const sla = document.createElement('tr');
+                    sla.innerHTML='<td>'+cliente.nome+'</td><td>'+cliente.email+'</td>';
+                    const tabela = document.getElementById('tabela');
+                    tabela.appendChild(sla);
+            });
+        })  
+
+   
+
+
+        </script>
+        </div>
+
+
+</body>
+
+</html>
